@@ -1,14 +1,14 @@
 - name: Playbook with vars_prompt
   hosts: localhost
   vars_prompt:
-    - name: peru
+    - name: name
       prompt: "Enter your name"
       private: no  # Indicates whether the input should be hidden (e.g., for passwords)
-    - name: ageu
+    - name: Age
       prompt: "Enter your age"
       private: no
 
   tasks:
     - name: Display user input
       ansible.builtin.debug:
-        msg: "Hello, {{ Name }}! You are {{ Age }} years old."
+        msg: "Hello, {{ name }}! You are {{ Age }} years old."
