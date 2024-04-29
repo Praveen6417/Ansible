@@ -1,6 +1,10 @@
 - name: localhost
   hosts: localhost
+  vars:
+    Course: DevOps
+    Name: HULK
+    Cloud: AWS
   tasks: 
   - name: print information
     ansible.builtin.debug:
-      msg: "Hii, i am learning DevOps with AWS"
+      msg: "Hii, i am{{Name}} and i am learning {{Course}} with {{Cloud}}"
