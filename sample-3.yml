@@ -6,5 +6,7 @@
     Cloud: AWS
   tasks: 
   - name: print information
+    vars:
+      Name: Iron Man
     ansible.builtin.debug:
-      msg: "Hii, i am{{Name}} and i am learning {{Course}} with {{Cloud}}"
+      msg: "Hii, i am {{Name}} and i am learning {{Course}} with {{Cloud}}"
