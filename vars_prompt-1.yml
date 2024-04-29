@@ -1,10 +1,10 @@
 - name: Playbook with vars_prompt
   hosts: localhost
   vars_prompt:
-    - name: Name
+    - name: name
       prompt: "Enter your name"
       private: no  # Indicates whether the input should be hidden (e.g., for passwords)
-    - name: Age
+    - name: age
       prompt: "Enter your age"
       private: no
 
