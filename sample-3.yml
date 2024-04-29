@@ -1,0 +1,6 @@
+- name: localhost
+  hosts: localhost
+  tasks: 
+  - name: print information
+    ansible.builtin.debug:
+      msg: "Hii, i am learning DevOps with AWS"
