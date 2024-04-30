@@ -5,7 +5,9 @@
     - name: checking path
       ansible.builtin.command:
         cmd: useradd expense
+        creates: /etc/passwd
       register: USER
+      ignore_errors: yes
 
     - name: storing and checking
       ansible.builtin.debug:
