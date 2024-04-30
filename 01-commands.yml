@@ -4,8 +4,9 @@
   tasks:
     - name: checking path
       ansible.builtin.command:
-        argv: ls -l 
+        cmd: ls -l 
+        register: USER
 
     - name: storing and checking
       ansible.builtin.debug:
-        msg: "{{ argv }}"
+        msg: "{{ USER }}"
