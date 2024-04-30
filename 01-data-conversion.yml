@@ -30,3 +30,7 @@
     - name: Convert string to dictionary
       debug:
         msg: "Dictionary value: {{ json_string | from_json }}"
+
+    - name: Convert string to Uppercase
+      debug:
+        msg: "{{ true_string | upper }}"
