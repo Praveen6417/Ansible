@@ -12,6 +12,8 @@
         name: mysqld
         state: started
         enabled: yes
+        
+    - name: Checking  
       ansible.builtin.debug:
         msg: Succesfully Enabled
 
