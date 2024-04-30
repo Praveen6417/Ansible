@@ -4,7 +4,7 @@
   tasks:
     - name: checking path
       ansible.builtin.command:
-        cmd: ls -l
+        cmd: useradd expense
       register: USER
 
     - name: storing and checking
