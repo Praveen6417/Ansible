@@ -4,7 +4,7 @@
   tasks:
     - name: checking path
       ansible.builtin.command:
-        argv: ls -l /var/logs
+        argv: ls -l 
 
     - name: storing and checking
       ansible.builtin.debug:
