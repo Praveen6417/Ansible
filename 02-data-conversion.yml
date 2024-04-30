@@ -1,0 +1,12 @@
+- name: convert dictionary into list
+  hosts: localhost
+  vars:
+    my_list:
+      Name: Hulk
+      Learning: DevOps
+      Cloud: AWS
+  
+  tasks:
+    - name: List to dictionary
+      ansible.builtin.debug:
+        msg: {{ my_list | dict2list }}
