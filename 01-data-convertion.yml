@@ -1,0 +1,32 @@
+
+- name: Data type conversion demo
+  hosts: localhost
+  gather_facts: no
+
+  vars:
+    string_number: "123"
+    float_string: "123.456"
+    true_string: "true"
+    list_string: "apple,banana,cherry"
+    json_string: '{"name": "John", "age": 30}'
+
+  tasks:
+    - name: Convert string to integer
+      debug:
+        msg: "Integer value: {{ string_number | int }}"
+
+    - name: Convert string to float
+      debug:
+        msg: "Float value: {{ float_string | float }}"
+
+    - name: Convert string to boolean
+      debug:
+        msg: "Boolean value: {{ true_string | bool }}"
+
+    - name: Convert string to list
+      debug:
+        msg: "List value: {{ list_string | split(',') }}"
+
+    - name: Convert string to dictionary
+      debug:
+        msg: "Dictionary value: {{ json_string | from_json }}"
