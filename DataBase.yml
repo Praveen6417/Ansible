@@ -19,9 +19,9 @@
 
     - name: check if MySQL root password is set
       ansible.builtin.shell:
-        cmd: "mysql -h 172.31.16.143 -u root --password -e 'SHOW DATABASES;'"
+        cmd: "mysql -h 172.31.16.143 -u root --password status"
       ignore_errors: yes
-      register: my_sql_root_check
+      register: my_sql_password_check
 
     - name: Checking  
       ansible.builtin.debug:
@@ -29,7 +29,7 @@
 
     - name: sql root check
       ansible.builtin.debug:
-        msg: "{{ my_sql_root_check }}"
+        msg: "{{ my_sql_password_check }}"
 
     - name: Checking  
       ansible.builtin.debug:
@@ -37,8 +37,8 @@
 
     - name: Creating root Password
       ansible.builtin.shell:
-        cmd: "mysql_secure_installation"
-      when: my_sql_root_check.rc != 0
+        cmd: "mysql_secure_installation --set-root-pass ExpenseApp@1"
+      when: my_sql_password_check.rc != 0
 
     - name: Checking  
       ansible.builtin.debug:
