@@ -12,22 +12,34 @@
         name: mysqld
         state: started
         enabled: yes
-        
+
     - name: Checking  
       ansible.builtin.debug:
         msg: Succesfully Enabled
 
     - name: check if MySQL root password is set
       ansible.builtin.shell:
-        cmd: "mysql -u root -p -e 'SHOW DATABASES;'"
+        cmd: "mysql -u root --password -e 'SHOW DATABASES;'"
       ignore_errors: yes
-      register: Record
+      register: my_sql_root_check
+
+    - name: Checking  
+      ansible.builtin.debug:
+        msg: Succesfully 1
 
     - name: sql root check
       ansible.builtin.debug:
-        msg: "{{ Record }}"
+        msg: "{{ my_sql_root_check }}"
+
+    - name: Checking  
+      ansible.builtin.debug:
+        msg: Succesfully 2
 
     - name: Creating root Password
       ansible.builtin.shell:
-        cmd: "mysql_secure_installation --set-root-pass ExpenseApp@1"
-      when: Record.rc != 0
+        cmd: "mysql_secure_installation"
+      when: my_sql_root_check.rc != 0
+
+    - name: Checking  
+      ansible.builtin.debug:
+        msg: Succesfully 3
