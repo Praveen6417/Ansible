@@ -1,0 +1,7 @@
+- name: Setting up MySQL Root Password
+  hosts: db
+  become: yes
+  tasks:
+    - name: printing hello
+      ansible.builtin.debug:
+        msg: "connected"
