@@ -5,3 +5,8 @@
     - name: printing hello
       ansible.builtin.shell:
         cmd: echo "Hello World"
+      register: MSG
+
+    - name: storing
+      ansible.builtin.debug:
+        msg: "{{ MSG }}"
