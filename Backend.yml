@@ -12,8 +12,11 @@
 
     - name: Installing Nodejs
       ansible.builtin.dnf:
-        name: nodejs
+        name: "{{ item }}"
         state: latest
+      loop:
+        - nodejs
+        - mysql
 
     - name: Creating/adding user
       ansible.builtin.user:
@@ -39,5 +42,21 @@
       ansible.builtin.shell:
         cmd: npm install 
         chdir: /app
+
+    - name: Setting up Backend service
+      ansible.builtin.copy:
+        scr: Backend.service
+        dest: /etc/systemd/system/backend.service
+
+    - name: systemd reload
+      ansible.builtin.service:
+        daemon_reload: true
+
+    - name: starting and enabling backend
+      ansible.builtin.service:
+        name: Backend
+        state: started
+        enabled: yes
+
 
         
