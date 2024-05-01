@@ -24,7 +24,7 @@
     - name: Check if MySQL root password is set
       ansible.builtin.shell:
         cmd: mysqladmin -h 172.31.19.23 -u root -p{{ mysql_root_password }} ping
-      ignore_errors: yes
+      ignore_errors: no
       register: my_sql_password_check
 
     - name: Checking  
