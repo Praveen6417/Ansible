@@ -21,6 +21,17 @@
       ansible.builtin.debug:
         msg: Succesfully Enabled
 
+    - name: Install MySQL Python dependencies using pip
+      ansible.builtin.pip:
+        - name: "{{ item }}"
+          state: latest
+          executable: pip3.9
+      loop:
+        - mysql-connector-python
+        - cryptography
+
+
+
     - name: Check if MySQL root password is set
       ansible.builtin.shell:
         cmd: mysql -h 172.31.19.23 -u root -p {{ mysql_root_password }}
