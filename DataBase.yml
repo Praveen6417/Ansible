@@ -23,9 +23,9 @@
 
     - name: Install MySQL Python dependencies using pip
       ansible.builtin.pip:
-        - name: "{{ item }}"
-          state: latest
-          executable: pip3.9
+        name: "{{ item }}"
+        state: latest
+        executable: pip3.9
       loop:
         - mysql-connector-python
         - cryptography
