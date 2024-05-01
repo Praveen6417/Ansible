@@ -8,7 +8,7 @@
     - name: mysql_password
       prompt: "Enter mysql root password"
       private: no
-      
+
   tasks:
     - name: "Disable Nodejs: 18"
       ansible.builtin.command:
@@ -71,7 +71,7 @@
         login_user: "{{ mysql_user }}"
         login_password: "{{ mysql_password }}"
         login_host: 172.31.19.23
-        name: "{{ mysql_user }}"
+        name: all
         state: import
         target: /app/schema/backend.sql
 
