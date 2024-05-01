@@ -21,9 +21,9 @@
       ansible.builtin.debug:
         msg: Succesfully Enabled
 
-    - name: check if MySQL root password is set
+    - name: Check if MySQL root password is set
       ansible.builtin.shell:
-        cmd: mysql -h 172.31.19.23 -u root -p {{ mysql_root_password }}
+        cmd: mysqladmin -h 172.31.19.23 -u root -p{{ mysql_root_password }} ping
       ignore_errors: yes
       register: my_sql_password_check
 
@@ -31,7 +31,7 @@
       ansible.builtin.debug:
         msg: Succesfully 1
 
-    - name: sql root check
+    - name: Display MySQL password check result
       ansible.builtin.debug:
         msg: "{{ my_sql_password_check }}"
 
