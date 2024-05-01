@@ -5,6 +5,10 @@
     - name: mysql_root_password
       prompt: "Enter mysql root password"
       private: no
+    - name: mysql_root_user
+      prompt: "Enter mysql root user name"
+      private: no
+
   tasks:
     - name: Installing MySQL
       ansible.builtin.dnf:
@@ -30,13 +34,14 @@
         - mysql-connector-python
         - cryptography
 
-
-
     - name: Check if MySQL root password is set
-      ansible.builtin.shell:
-        cmd: mysql -h 172.31.19.23 -u root -p {{ mysql_root_password }} -e 'show databases;' 
-      ignore_errors: no
+      ansible.builtin.mysql_user:
+        login_user: "{{ mysql_root_user }}"
+        login_password: "{{ mysql_root_password }}"
+        login_host: 172.31.19.23
+        #check_implicit_admin: yes  # Use this if the playbook might run on systems where root has no password but can authenticate without one
       register: my_sql_password_check
+      ignore_errors: yes 
 
     - name: Checking  
       ansible.builtin.debug:
