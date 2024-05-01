@@ -38,7 +38,7 @@
     - name: Check if MySQL root password is set
       ansible.builtin.mysql_user:
         login_user: "{{ mysql_root_user }}"
-        login_password: " " #"{{ mysql_root_password }}"
+        login_password: "{{ mysql_root_password }}"
         login_host: 172.31.19.23
         user: "{{ mysql_root_password }}"  # Specify the MySQL user whose password you want to check
         #client: mysql  # Specify the MySQL client library to use
