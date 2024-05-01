@@ -1,0 +1,18 @@
+- name: Setting up Backend 
+  hosts: Backend
+  become: yes
+  tasks:
+    - name: "Disable Nodejs: 18"
+      ansible.builtin.command:
+        cmd: dnf module disable nodejs -y
+
+    - name: "Enable Nodejs: 20"
+      ansible.builtin.command:
+        cmd: dnf module enable nodejs:20 -y
+
+    - name: Installing Nodejs
+      ansible.builtin.dnf:
+        name: nodejs
+        state: latest
+        
+        
