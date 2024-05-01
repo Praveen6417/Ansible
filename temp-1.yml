@@ -3,5 +3,5 @@
   become: yes
   tasks:
     - name: printing hello
-      ansible.builtin.debug:
-        msg: "connected"
+      ansible.builtin.shell:
+        cmd: echo "Hello World"

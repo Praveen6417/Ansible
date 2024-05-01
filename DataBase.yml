@@ -1,6 +1,10 @@
 - name: Setting up MySQL
   hosts: db
   become: yes
+  vars_prompt:
+    - name: mysql_root_password
+      prompt: "Enter mysql root password"
+      private: no
   tasks:
     - name: Installing MySQL
       ansible.builtin.dnf:
@@ -19,7 +23,7 @@
 
     - name: check if MySQL root password is set
       ansible.builtin.shell:
-        cmd: "mysql -h 172.31.16.143 -u root --password status"
+        cmd: mysql -h 172.31.19.23 -u root -p {{ mysql_root_password }}
       ignore_errors: yes
       register: my_sql_password_check
 
@@ -37,7 +41,7 @@
 
     - name: Creating root Password
       ansible.builtin.shell:
-        cmd: "mysql_secure_installation --set-root-pass ExpenseApp@1"
+        cmd: mysql_secure_installation --set-root-pass {{ mysql_root_password }}
       when: my_sql_password_check.rc != 0
 
     - name: Checking  
