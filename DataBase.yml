@@ -64,11 +64,11 @@
       when: my_sql_password_check.failed is true
       register: storing
       ignore_errors: yes
-      tasks:
-        - name: Prompt
-          ansible.builtin.debug:
-            msg: MySQL root password is already set
-          when: storing.rc != 0
+
+    - name: Prompt
+      ansible.builtin.debug:
+        msg: MySQL root password is already set
+      when: my_sql_password_check.failed is not true
 
     - name: Checking  
       ansible.builtin.debug:
