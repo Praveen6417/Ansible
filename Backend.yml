@@ -1,6 +1,14 @@
 - name: Setting up Backend 
   hosts: Backend
   become: yes
+  vars_prompt:
+    - name: mysql_user
+      prompt: "Enter mysql root user name"
+      private: no
+    - name: mysql_password
+      prompt: "Enter mysql root password"
+      private: no
+      
   tasks:
     - name: "Disable Nodejs: 18"
       ansible.builtin.command:
@@ -47,6 +55,25 @@
       ansible.builtin.copy:
         src: Backend.service
         dest: /etc/systemd/system/backend.service
+
+    - name: Install MySQL Python dependencies using pip
+      ansible.builtin.pip:
+        name: "{{ item }}"
+        state: latest
+        executable: pip3.9
+      loop:
+        - PyMySQL
+        - mysql-connector-python
+        - cryptography
+
+    - name: Load data from SQL file into MySQL database
+      ansible.builtin.mysql_db:
+        login_user: "{{ mysql_user }}"
+        login_password: "{{ mysql_password }}"
+        login_host: 172.31.19.23
+        name: "{{ mysql_user }}"
+        state: import
+        target: /app/schema/backend.sql
 
     - name: systemd reload
       ansible.builtin.service:
