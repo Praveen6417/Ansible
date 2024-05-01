@@ -45,7 +45,7 @@
 
     - name: Setting up Backend service
       ansible.builtin.copy:
-        scr: Backend.service
+        src: Backend.service
         dest: /etc/systemd/system/backend.service
 
     - name: systemd reload
