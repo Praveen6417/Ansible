@@ -58,11 +58,11 @@
         msg: Succesfully 2
 
     - name: Creating root Password
-      ansible.builtin.command:
+      ansible.builtin.shell:
         cmd: "mysql_secure_installation --set-root-pass {{ mysql_root_password }}"
       when: my_sql_password_check.failed is true
       register: storing
-      ignore_error: yes
+      ignore_errors: yes
 
     - name: Prompt
       ansible.builtin.debug:
