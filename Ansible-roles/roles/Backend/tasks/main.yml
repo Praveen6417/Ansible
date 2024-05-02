@@ -1,0 +1,74 @@
+- name: "Disable Nodejs: 18"
+  ansible.builtin.command:
+    cmd: dnf module disable nodejs -y
+
+- name: "Enable Nodejs: 20"
+  ansible.builtin.command:
+    cmd: dnf module enable nodejs:20 -y
+
+- name: Installing Nodejs
+  ansible.builtin.dnf:
+    name: "{{ item }}"
+    state: latest
+  loop:
+    - nodejs
+    - mysql
+
+- name: Creating/adding user
+  ansible.builtin.user:
+    name: expense
+
+- name: Creating a directory
+  ansible.builtin.file:
+    path: /app
+    state: directory
+
+- name: Downloading application code
+  ansible.builtin.get_url:
+    url: https://expense-builds.s3.us-east-1.amazonaws.com/expense-backend-v2.zip
+    dest: /tmp/backend.zip
+
+- name: unzip backend file 
+  ansible.builtin.unarchive: #When remote_src is set to yes, it indicates that the source archive file exists on the remote host. 
+    src: /tmp/backend.zip
+    dest: /app
+    remote_src: yes 
+
+- name: Installing dependencies 
+  ansible.builtin.shell:
+    cmd: npm install 
+    chdir: /app
+
+- name: Setting up Backend service
+  ansible.builtin.copy:
+    src: Backend.service
+    dest: /etc/systemd/system/backend.service
+
+- name: Install MySQL Python dependencies using pip
+  ansible.builtin.pip:
+    name: "{{ item }}"
+    state: latest
+    executable: pip3.9
+  loop:
+    - PyMySQL
+    - mysql-connector-python
+    - cryptography
+
+- name: Load data from SQL file into MySQL database
+  ansible.builtin.mysql_db:
+    login_user: "{{ mysql_root_user }}"
+    login_password: "{{ mysql_root_password }}"
+    login_host: 172.31.18.125
+    name: all
+    state: import
+    target: /app/schema/backend.sql
+
+- name: systemd reload
+  ansible.builtin.service:
+    daemon_reload: true
+
+- name: starting and enabling backend
+  ansible.builtin.service:
+    name: backend
+    state: started
+    enabled: yes
