@@ -22,4 +22,26 @@
       ansible.builtin.file:
         path: /usr/share/nginx/html
         state: directory
+
+    - name: Downloading Frontend code
+      ansible.builtin.get_url:
+        url: https://expense-builds.s3.us-east-1.amazonaws.com/expense-frontend-v2.zip
+        dest: /tmp/frontend.zip
+
+    - name: unzip backend file 
+      ansible.builtin.unarchive: #When remote_src is set to yes, it indicates that the source archive file exists on the remote host. 
+        src: /tmp/frontend.zip
+        dest: /usr/share/nginx/html
+        remote_src: yes
+
+    - name: setting up cofigurtion
+      ansible.builtin.copy:
+        src: expense.conf
+        dest: /etc/nginx/default.d/expense.conf
+
+    - name: Restart nginx
+      ansible.builtin.service:
+        name: nginx
+        state: restarted
+
     
