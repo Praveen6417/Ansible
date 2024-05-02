@@ -16,7 +16,7 @@
     - name: Delete contents of a directory
       ansible.builtin.file:
         path: /usr/share/nginx/html/
-        state: directory
+        state: absent
         recurse: yes
 
 
