@@ -39,8 +39,8 @@
       ansible.builtin.mysql_user:
         login_user: "{{ mysql_root_user }}"
         login_password: "{{ mysql_root_password }}"
-        login_host: 172.31.18.125
-        user: "{{ mysql_root_password }}"  # Specify the MySQL user whose password you want to check
+        login_host: 172.31.19.23
+        user: "{{ mysql_root_user }}"  # Specify the MySQL user whose password you want to check
         #client: mysql  # Specify the MySQL client library to use
         #check_implicit_admin: yes  # Use this if the playbook might run on systems where root has no password but can authenticate without one
       register: my_sql_password_check

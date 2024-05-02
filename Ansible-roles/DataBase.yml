@@ -1,0 +1,5 @@
+- name: Configuring Database
+  hosts: db
+  become: yes
+  roles:
+    - DataBase
