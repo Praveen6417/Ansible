@@ -36,7 +36,7 @@
     dest: /etc/nginx/default.d/expense.conf
 
 - name: Restart nginx
-  ansible.builtin.templates:
+  ansible.builtin.template:
     name: nginx
     state: restarted
   notify:
