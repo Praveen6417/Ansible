@@ -2,7 +2,7 @@ plugin: aws_ec2
 regions:
   - us-east-1
 filters:
-  tag:Name: DataBase  # Replace 'SpecificInstanceName' with the actual value of the Name tag you're interested in
+  tag:Name: DataBase*  # Replace 'SpecificInstanceName' with the actual value of the Name tag you're interested in
 keyed_groups:
   - key: tags['Name']
     prefix: ''
