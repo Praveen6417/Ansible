@@ -6,3 +6,8 @@
     - name: Print Private IP Addresses
       debug:
         msg: "The private IP address is {{ ansible_host }}"
+    
+    - name: installing sql
+      ansible.builtin.dnf:  
+        name: mysql
+        state: latest
