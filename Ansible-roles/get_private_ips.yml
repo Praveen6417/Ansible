@@ -1,0 +1,8 @@
+- name: Retrieve Private IP Addresses of Specified EC2 Instances
+  hosts: all
+  gather_facts: no
+
+  tasks:
+    - name: Print Private IP Addresses
+      debug:
+        msg: "The private IP address is {{ ansible_host }}"
