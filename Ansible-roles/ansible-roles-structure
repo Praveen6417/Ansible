@@ -1,0 +1,19 @@
+my_role/
+├── defaults/
+│   └── main.yml
+├── files/
+│   └── some_file.txt
+├── handlers/
+│   └── main.yml
+├── meta/
+│   └── main.yml
+├── tasks/
+│   └── main.yml
+├── templates/
+│   └── some_template.j2
+├── tests/
+│   ├── inventory
+│   └── test.yml
+├── vars/
+│   └── main.yml
+└── README.md
