@@ -10,6 +10,3 @@
         Name: Iron Man
       ansible.builtin.debug:
         msg: "Hii, i am {{Name}} and i am learning {{Course}} with {{Cloud}}"
-    - name: print information 1
-      ansible.builtin.debug:
-        msg: "Hii, i am {{Name}} and i am learning {{Course}} with {{Cloud}}"

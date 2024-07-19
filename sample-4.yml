@@ -1,0 +1,6 @@
+Animal:
+  - name: Lion
+    Gender: Male
+    children:
+    - name : cub
+      gender: Male
