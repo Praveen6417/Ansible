@@ -1,5 +1,6 @@
 - name: "Configure server based on component"
   hosts: "{{ component }}"
+  connection: local
   become: yes
   roles:
     - role: "{{ component }}"
