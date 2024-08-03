@@ -32,6 +32,15 @@
     src: Backend.service.j2
     dest: /etc/systemd/system/backend.service
 
+- name: systemd reload
+  ansible.builtin.service:
+    daemon_reload: true
+
+- name: Enable Backend Service
+  ansible.builtin.service:
+    name: backend
+    enabled: yes
+
 - name: Install MySQL Python dependencies using pip
   ansible.builtin.pip:
     name: "{{ item }}"
@@ -50,10 +59,6 @@
     name: all
     state: import
     target: /app/schema/backend.sql
-
-- name: systemd reload
-  ansible.builtin.service:
-    daemon_reload: true
 
 - name: starting and enabling backend
   ansible.builtin.service:
