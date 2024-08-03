@@ -1,4 +1,4 @@
-Backend_Host: 172.31.94.11
+Backend_Host: 172.31.83.64
 Directory_path: /usr/share/nginx/html
 file_name: frontend
 file_path: /tmp/frontend.zip
