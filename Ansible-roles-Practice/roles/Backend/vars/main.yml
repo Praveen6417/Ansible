@@ -1,0 +1,5 @@
+mysql_root_user: root
+mysql_root_password: ExpenseApp@1
+Directory_path: /app
+file_name: backend
+file_path: /tmp/backend.zip

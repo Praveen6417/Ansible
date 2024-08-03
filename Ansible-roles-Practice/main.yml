@@ -1,0 +1,9 @@
+- name: "Configure server based on component"
+  hosts: "{{ component }}"
+  become: yes
+  roles:
+    - role: "{{ component }}"
+  vars_prompt:
+    - name: "component"
+      prompt: "Enter the component name"
+      private: no

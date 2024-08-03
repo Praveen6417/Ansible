@@ -1,0 +1,62 @@
+- name: Installing MySQL
+  ansible.builtin.dnf:
+    name: mysql-server
+    state: latest
+
+- name: Enabling MySQL-Server
+  ansible.builtin.service:
+    name: mysqld
+    state: started
+    enabled: yes
+
+- name: Checking  
+  ansible.builtin.debug:
+    msg: Succesfully Enabled
+
+- name: Install MySQL Python dependencies using pip
+  ansible.builtin.pip:
+    name: "{{ item }}"
+    state: latest
+    executable: pip3.9
+  loop:
+    - PyMySQL
+    - mysql-connector-python
+    - cryptography
+
+- name: Check if MySQL root password is set
+  ansible.builtin.mysql_user:
+    login_user: "{{ mysql_root_user }}"
+    login_password: "{{ mysql_root_password }}"
+    login_host: 172.31.83.209
+    user: "{{ mysql_root_user }}"  # Specify the MySQL user whose password you want to check
+    #client: mysql  # Specify the MySQL client library to use
+    #check_implicit_admin: yes  # Use this if the playbook might run on systems where root has no password but can authenticate without one
+  register: my_sql_password_check
+  ignore_errors: yes 
+
+- name: Checking  
+  ansible.builtin.debug:
+    msg: Succesfully 1
+
+- name: Display MySQL password check result
+  ansible.builtin.debug:
+    msg: "{{ my_sql_password_check }}"
+
+- name: Checking  
+  ansible.builtin.debug:
+    msg: Succesfully 2
+
+- name: Creating root Password
+  ansible.builtin.shell:
+    cmd: "mysql_secure_installation --set-root-pass {{ mysql_root_password }}"
+  when: my_sql_password_check.failed is true
+  ignore_errors: yes
+
+- name: Prompt
+  ansible.builtin.debug:
+    msg: MySQL root password is already set
+  when: my_sql_password_check.failed is not true
+
+- name: Checking  
+  ansible.builtin.debug:
+    msg: Succesfully 3
