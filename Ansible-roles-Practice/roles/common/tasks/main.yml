@@ -1,15 +1,15 @@
 - name: Creating a directory
   ansible.builtin.file:
-    path: "{{ Directory_path }}"
+    path: "/app"
     state: directory
 
 - name: Downloading application code
   ansible.builtin.get_url:
-    url: https://expense-builds.s3.us-east-1.amazonaws.com/expense-{{ file_name }}-v2.zip
-    dest: "{{ file_path }}"
+    url: https://expense-builds.s3.us-east-1.amazonaws.com/expense-backend-v2.zip
+    dest: "/tmp/backend.zip"
 
 - name: unzip backend file 
   ansible.builtin.unarchive: #When remote_src is set to yes, it indicates that the source archive file exists on the remote host. 
-    src: "{{ file_path }}"
-    dest: "{{ Directory_path }}"
+    src: "/tmp/backend.zip"
+    dest: "/app"
     remote_src: yes 
