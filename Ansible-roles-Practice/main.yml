@@ -1,5 +1,5 @@
 - name: "Configure server based on component"
-  hosts: all
+  hosts: Backend
   connection: local
   become: yes
   roles:
