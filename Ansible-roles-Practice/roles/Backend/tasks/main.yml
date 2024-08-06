@@ -1,67 +1,70 @@
-- name: "Disable Nodejs: 18"
-  ansible.builtin.command:
-    cmd: dnf module disable nodejs -y
+- name: Setup Backend Server
+  become: yes
+  tasks:
+  - name: "Disable Nodejs: 18"
+    ansible.builtin.command:
+      cmd: dnf module disable nodejs -y
 
-- name: "Enable Nodejs: 20"
-  ansible.builtin.command:
-    cmd: dnf module enable nodejs:20 -y
+  - name: "Enable Nodejs: 20"
+    ansible.builtin.command:
+      cmd: dnf module enable nodejs:20 -y
 
-- name: Installing Nodejs and MySQL
-  ansible.builtin.dnf:
-    name: "{{ item }}"
-    state: latest
-  loop:
-    - nodejs
-    - mysql
+  - name: Installing Nodejs and MySQL
+    ansible.builtin.dnf:
+      name: "{{ item }}"
+      state: latest
+    loop:
+      - nodejs
+      - mysql
 
-- name: Creating/adding user
-  ansible.builtin.user:
-    name: expense
+  - name: Creating/adding user
+    ansible.builtin.user:
+      name: expense
 
-- name: run common tasks
-  ansible.builtin.import_role:
-    name: common
+  - name: run common tasks
+    ansible.builtin.import_role:
+      name: common
 
-- name: Installing dependencies 
-  ansible.builtin.shell:
-    cmd: npm install 
-    chdir: /app
+  - name: Installing dependencies 
+    ansible.builtin.shell:
+      cmd: npm install 
+      chdir: /app
 
-- name: Setting up Backend service
-  ansible.builtin.template:
-    src: Backend.service.j2
-    dest: /etc/systemd/system/backend.service
+  - name: Setting up Backend service
+    ansible.builtin.template:
+      src: Backend.service.j2
+      dest: /etc/systemd/system/backend.service
 
-- name: systemd reload
-  ansible.builtin.service:
-    daemon_reload: true
+  - name: systemd reload
+    ansible.builtin.service:
+      daemon_reload: true
 
-- name: Enable Backend Service
-  ansible.builtin.service:
-    name: backend
-    enabled: yes
+  - name: Enable Backend Service
+    ansible.builtin.service:
+      name: backend
+      enabled: yes
 
-- name: Install MySQL Python dependencies using pip
-  ansible.builtin.pip:
-    name: "{{ item }}"
-    state: latest
-    executable: pip3.9
-  loop:
-    - PyMySQL
-    - mysql-connector-python
-    - cryptography
+  - name: Install MySQL Python dependencies using pip
+    ansible.builtin.pip:
+      name: "{{ item }}"
+      state: latest
+      executable: pip3.9
+    loop:
+      - PyMySQL
+      - mysql-connector-python
+      - cryptography
 
-- name: Load data from SQL file into MySQL database
-  ansible.builtin.mysql_db:
-    login_user: "{{ mysql_root_user }}"
-    login_password: "{{ mysql_root_password }}"
-    login_host: "{{ DB_HOST }}"
-    name: all
-    state: import
-    target: /app/schema/backend.sql
+  - name: Load data from SQL file into MySQL database
+    ansible.builtin.mysql_db:
+      login_user: "{{ mysql_root_user }}"
+      login_password: "{{ mysql_root_password }}"
+      login_host: "{{ DB_HOST }}"
+      name: all
+      state: import
+      target: /app/schema/backend.sql
 
-- name: starting and enabling backend
-  ansible.builtin.service:
-    name: backend
-    state: started
-    enabled: yes
+  - name: starting and enabling backend
+    ansible.builtin.service:
+      name: backend
+      state: started
+      enabled: yes
