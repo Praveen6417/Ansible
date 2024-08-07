@@ -1,8 +1,8 @@
-- name: "Disable Nodejs: 18"
+- name: Disable Nodejs 18
   ansible.builtin.command:
     cmd: dnf module disable nodejs -y
 
-- name: "Enable Nodejs: 20"
+- name: Enable Nodejs 20
   ansible.builtin.command:
     cmd: dnf module enable nodejs:20 -y
 
@@ -13,7 +13,7 @@
 
 - name: Installing MySQL
   ansible.builtin.dnf:
-    name:  mysql
+    name: mysql
     state: latest
 
 - name: Creating/adding user
@@ -24,15 +24,24 @@
   ansible.builtin.import_role:
     name: common
 
-- name: Installing dependencies 
+- name: Installing dependencies
   ansible.builtin.shell:
-    cmd: npm install 
+    cmd: npm install
     chdir: /app
 
 - name: Setting up Backend service
   ansible.builtin.template:
     src: Backend.service.j2
     dest: /etc/systemd/system/backend.service
+
+- name: Debug - Check if backend.service file exists
+  ansible.builtin.stat:
+    path: /etc/systemd/system/backend.service
+  register: backend_service_file
+
+- name: Display backend.service file stats
+  ansible.builtin.debug:
+    var: backend_service_file
 
 - name: systemd reload
   ansible.builtin.service:
