@@ -2,7 +2,9 @@
   hosts: all
   connection: local
   become: yes
-  roles:
-    - "{{ component }}"
+  tasks:
+    - name: "Include role based on component variable"
+      include_role:
+        name: "{{ component }}"
   vars_files:
     - "variables-dev.yml"
