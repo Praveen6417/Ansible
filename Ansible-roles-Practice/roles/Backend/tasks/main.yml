@@ -71,8 +71,7 @@
     state: import
     target: /app/schema/backend.sql
 
-- name: starting and enabling backend
+- name: starting backend
   ansible.builtin.service:
     name: backend
     state: restarted
-    enabled: yes
